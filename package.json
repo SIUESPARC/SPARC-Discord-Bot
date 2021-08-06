@@ -18,7 +18,8 @@
   "homepage": "https://github.com/SIUESPARC/SPARC-Discord-Bot#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "mongodb": "^4.1.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0"
