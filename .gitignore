@@ -134,14 +134,4 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
-<<<<<<< HEAD
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-=======
-# Cython debug symbols
-cython_debug/
->>>>>>> 23c22fa798f32dd254589ac63d11578e861b675f
+
