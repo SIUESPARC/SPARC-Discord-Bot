@@ -1,9 +1,12 @@
 # bot.py
 import os
+
 import requests
+
 
 import discord
 from dotenv import load_dotenv
+
 
 # Get necessary credentials from .env file
 load_dotenv()
@@ -35,15 +38,19 @@ def sanitize(message: discord.message.Message) -> discord.message.Message:
     message.content = message.content.replace
     return message
 
+
 @client.event
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
+
+
 
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
+
 
     if str(message.channel.id) in CHANNELS:
         message = sanitize(message)
@@ -53,3 +60,4 @@ async def on_message(message):
         await message.channel.send(message.content)
 
 client.run(TOKEN)
+
