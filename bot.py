@@ -32,7 +32,7 @@ def sanitize(message: discord.message.Message) -> discord.message.Message:
     Un-Discordize the message by removing any channel or role tags to 
     make the message readable in GroupMe
     """
-    message.content = message.content.replace
+    message.content = message.content.replace()
     return message
 
 @client.event
