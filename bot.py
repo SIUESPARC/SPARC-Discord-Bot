@@ -35,6 +35,7 @@ def send_groupme(message: str) -> None:
     """
 
     url = 'https://api.groupme.com/v3/bots/post'
+    message = f"{message.author.display_name}: {message.clean_content}"
     data = {
         'bot_id' : GROUPME,
         'text' : message,
@@ -48,23 +49,9 @@ def tweet(message: str) -> None:
     Args:
         message (str): Message to be tweeted
     """
+    message = message.clean_content
     status = api.update_status(status=message)
     pprint(f"Tweet Status: {status}")
-
-def sanitize(message: discord.message.Message) -> str:
-    """Un-Discordize the message by removing any channel or role tags to 
-    make the message readable in GroupMe
-
-    Args:
-        message (discord.message.Message): Discord Message with tags
-
-    Returns:
-        str: Message with discord tags converted to text
-    """
-    sanitized = f"{message.author.display_name}: {message.clean_content}"
-
-    return sanitized
-
 
 @client.event
 async def on_ready():
@@ -76,8 +63,7 @@ async def on_message(message):
         return
 
     if str(message.channel.id) in CHANNELS:
-        message = sanitize(message)
-        # send_groupme(message)
+        send_groupme(message)
         tweet(message)
 
 if __name__ == "__main__":
