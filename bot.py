@@ -23,9 +23,10 @@ ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
 client = discord.Client()
 
 # Authenticate and connect to twitter API
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-api = tweepy.API(auth)
+twitter_client = tweepy.Client( consumer_key=CONSUMER_KEY,
+                                consumer_secret=CONSUMER_SECRET,
+                                access_token=ACCESS_TOKEN,
+                                access_token_secret=ACCESS_TOKEN_SECRET)
 
 def send_groupme(message: str) -> None:
     """Receive a message and copy message into groupMe
@@ -50,8 +51,8 @@ def tweet(message: str) -> None:
         message (str): Message to be tweeted
     """
     message = message.clean_content
-    status = api.update_status(status=message)
-    pprint(f"Tweet Status: {status}")
+    response = twitter_client.create_tweet(text=message)
+    pprint(f"Tweet Status: {response}")
 
 @client.event
 async def on_ready():
