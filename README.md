@@ -1,5 +1,8 @@
 # SPARC Discord Bot
+Bot that automatically shares Discord announcements to GroupMe and Twitter
+
+Written in Python and deployed using Heroku
 
 # TODO and IDEAS
-- Create an assignment notification system
-- Add the ability to manage class roles and notification settings for users
+- Write automated tests for the bot
+- Integrate with Google Calendar?
