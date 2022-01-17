@@ -1,12 +1,13 @@
 # bot.py
 import os
 import requests
-from pprint import pprint
 
 import discord
 from discord.ext import commands
 import tweepy
 from dotenv import load_dotenv
+
+from integrations import send_groupme, tweet
 
 # Get discord and GroupMe credentials
 load_dotenv()
@@ -28,34 +29,6 @@ twitter_client = tweepy.Client( consumer_key=CONSUMER_KEY,
 
 bot = commands.Bot(command_prefix='!')
 
-def send_groupme(message: str) -> None:
-    """Receive a message and copy message into groupMe
-
-    Args:
-        message (str): Message to be sent to GroupMe
-    """
-
-    url = 'https://api.groupme.com/v3/bots/post'
-    message = f"{message.author.display_name}: {message.clean_content}"
-    data = {
-        'bot_id' : GROUPME,
-        'text' : message,
-        }
-    r = requests.post(url, json=data)
-    print(f"GroupMe Status: {r.status_code}, {r.reason}")
-
-def tweet(message: str) -> None:
-    """Receive a message and tweet message to Twitter account
-
-    Args:
-        message (str): Message to be tweeted
-    """
-    message = message.clean_content
-    response = twitter_client.create_tweet(text=message)
-    pprint(f"Tweet Status: {response}")
-
-
-
 # Events
 @bot.event
 async def on_ready():
@@ -68,8 +41,8 @@ async def on_message(message):
         return
 
     if str(message.channel.id) in CHANNELS:
-        send_groupme(message)
-        tweet(message)
+        send_groupme(GROUPME, message)
+        tweet(twitter_client, message)
 
     await bot.process_commands(message)
 
@@ -81,6 +54,13 @@ async def calendar(ctx):
 @bot.command(name="playing", pass_context=True)
 async def playing(ctx, game):
     await bot.change_presence(activity = discord.Game(game))
+
+@bot.command(name='kanye')
+async def kanye(ctx):
+    url = "https://api.kanye.rest/"
+    response = requests.get(url)
+    quote = response.json()['quote']
+    await ctx.send(quote)
 
 if __name__ == "__main__":
     bot.run(TOKEN)
