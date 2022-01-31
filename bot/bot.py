@@ -15,6 +15,9 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GROUPME = os.getenv('GROUPME_BOT_ID')
 CHANNELS = os.getenv('DISCORD_CHANNELS')        # CHANNELS will hold a list of channel ids 
 
+TEST_GROUPME = os.getenv('TEST_GROUPME_BOT_ID')
+TEST_CHANNELS = os.getenv('TEST_DISCORD_CHANNELS')
+
 # Get twitter credentials
 CONSUMER_KEY = os.getenv('TWITTER_CONSUMER_KEY')
 CONSUMER_SECRET = os.getenv('TWITTER_CONSUMER_SECRET')
@@ -43,6 +46,8 @@ async def on_message(message):
     if str(message.channel.id) in CHANNELS:
         send_groupme(GROUPME, message)
         tweet(twitter_client, message)
+    elif str(message.channel.id) in TEST_CHANNELS:
+        send_groupme(TEST_GROUPME, message)
 
     await bot.process_commands(message)
 

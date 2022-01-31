@@ -28,6 +28,7 @@ def send_groupme(bot_id: str, message: str) -> None:
 
     message = f"{message.author.display_name}: {message.clean_content}"
 
+    # While loop controls handling for large messages
     while len(message) > 1000:
         sliced_message = message[:1000]
         slice_index = sliced_message.rfind('\n\n')
