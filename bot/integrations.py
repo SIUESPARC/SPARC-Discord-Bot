@@ -1,4 +1,5 @@
 import requests
+import os
 from pprint import pprint
 
 import tweepy
@@ -28,4 +29,3 @@ def tweet(client: tweepy.Client, message: str) -> None:
     message = message.clean_content
     response = client.create_tweet(text=message)
     pprint(f"Tweet Status: {response}")
-
