@@ -47,11 +47,11 @@ async def on_message(message):
     await bot.process_commands(message)
 
 # Commands
-@bot.command(name="ping", pass_context=True)
+@bot.command(name="ping")
 async def calendar(ctx):
     await ctx.send('pong')
 
-@bot.command(name="playing", pass_context=True)
+@bot.command(name="playing")
 async def playing(ctx, game):
     await bot.change_presence(activity = discord.Game(game))
 
